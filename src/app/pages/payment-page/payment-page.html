@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="footer-component" *ngIf="(running$ | async)">
+    <div class="liveComponent">
+      <div class="liveHeader">
+        <span class="circule"></span>
+        <span class="textLive"> LIVE</span>
+      </div>
+    </div>
+    <div>
+      <svg width="150" height="35">
+        <rect x="0" y="0" width="150" height="35" stroke="black" stroke-width="2px" fill="white"/>
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="text">YOUR CODE NOW: {{currentGrid.code}}</text>
+      </svg>
+    </div>
+  </div>
+  <div class="divTextInformation">
+    <span class="textInformation">Please insert a payment and amount!</span>
+  </div>
+  <div fxLayout="row">
+    <form #paymentForm="ngForm">
+      <div fxLayout="column" fxLayoutAlign="space-around center"
+           class="header">
+        <div class="header-component">
+          <label>
+            <p class="text">PAYMENT</p>
+            <input type="text" [(ngModel)]="newPayment.paymentName" class="form-control"
+                   required name="paymentName" #paymentName="ngModel" />
+          </label>
+        </div>
+        <div class="header-component">
+          <label>
+            <p class="text">AMOUNT</p>
+            <input type="number" required [(ngModel)]="newPayment.amount" class="form-control" min="1"
+                   name="amount" #amount="ngModel" />
+          </label>
+        </div>
+        <div class="header-component">
+          <button mat-button color="primary" class="addButton" [disabled]="!paymentForm.form.valid || !(running$ | async)"
+                  (click)="addNewPayment()">
+            
+            <span class="text">
+              + ADD
+            </span>
+          </button>
+        </div>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-around center"
+           class="header-error">
+        <div *ngIf="paymentName.invalid"
+             class="header-error-component alert">
+          <div *ngIf="paymentName.errors?.required">
+            <span class="text">
+              Name is required
+            </span>
+          </div>
+        </div>
+        <div *ngIf="!paymentName.invalid" class="header-error-component alert">
+        </div>
+        <div *ngIf="amount.invalid" class="header-error-component alert">
+          <div *ngIf="amount.errors?.required">
+            <span class="text">
+              Amount is required
+            </span>
+          </div>
+          <div *ngIf="amount.errors?.min">
+            <span class="text">
+              Amount must be greater than 1
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div fxLayout="column">
+    <p class="text">PAYMENT LIST</p>
+    <table mat-table fxFill
+           mdbTable class="table table-striped">
+      <thead>
+        <tr>
+          <th textAlign="center">NAME</th>
+          <th textAlign="center">AMOUNT</th>
+          <th textAlign="center">CODE</th>
+          <th textAlign="center">GRID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let item of (paymentService.payments$ | async); let i = index">
+          <tr>
+            <td >
+              <span> {{ item.paymentName }} </span>
+            </td>
+            <td >
+              <span> {{ item.amount }} </span>
+            </td>
+            <td>
+              <span> {{ item.generator.code }} </span>
+            </td>
+            <td>
+              <span> {{ item.generator.grid }} </span>
+            </td>
+          </tr>
+        </ng-container>
+      <tbody>
+    </table>
+  </div>
+</div>

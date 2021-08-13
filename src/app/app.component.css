@@ -1,0 +1,18 @@
+.container {
+  padding-left: 30px;
+}
+.tabs {
+  background-color: aliceblue;
+  border-radius: 7px;
+  width: 70%;
+}
+
+.active-link {
+  color:white;
+  background-color:lightblue
+}
+.text {
+  color: grey;
+  font-size: 16px;
+  font-weight: bold;
+}

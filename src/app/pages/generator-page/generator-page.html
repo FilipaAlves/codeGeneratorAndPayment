@@ -1,0 +1,50 @@
+<div class="container">
+  <div fxLayout="row">
+    <div fxLayout="column" fxLayoutAlign="space-around center"
+         class="header">
+      <div class="header-component">
+        <label>
+          <p class="text">Insert a character</p>
+          <input type="text" maxlength="1" #inputLetter [value]="input" [(ngModel)]="input" [disabled]="disabled"
+                 placeholder="Character" class="text" pattern="[A-Za-z]" title="Username should only contain lowercase letters. e.g. john"/>
+        </label>
+      </div>
+      <div class="header-component">
+        <img src="assets/img/clock.jpg" alt="image">
+        <p class="txt-time textTime"  *ngIf="(running$ | async)">{{(time$ | async) | date:'HH:mm:ss'}}</p>
+      </div>
+      <div class="header-component">
+        <button mat-raised-button color="primary" [disabled]="(running$ | async)"
+                (click)="startGenerator()">
+          <span class="text">GENERATE 2D GRID</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <div fxLayout="column">
+    <mat-grid-list cols="10" ratio="10:10" rowHeight="2:0.5">
+      <mat-grid-tile *ngFor="let letter of currentGrid.grid">
+        <mat-card>
+          <mat-card-content class="textGrid">
+            {{letter}}
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div class="footer-component" *ngIf="(running$ | async)">
+    <div class="liveComponent">
+      <div class="liveHeader">
+        <span class="circule"></span>
+        <span class="textLive"> LIVE</span>
+      </div>
+    </div>
+    <div>
+      <svg width="150" height="35">
+        <rect x="0" y="0" width="150" height="35" stroke="black" stroke-width="2px" fill="white" />
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="text">YOUR CODE NOW: {{currentGrid.code}}</text>
+      </svg>
+    </div>
+  </div>
+</div>
