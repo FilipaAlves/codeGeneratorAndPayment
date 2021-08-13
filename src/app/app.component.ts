@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GeneratorPageComponent } from './pages/generator-page/generator-page';
+import { CreateGridService } from './services/createGrid.service';
 import { PaymentService } from './services/payment.service';
 
 @Component({
@@ -8,10 +8,10 @@ import { PaymentService } from './services/payment.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent{
-
+  title = 'codeGeneratorAndPayment';
   constructor(
     private paymentService: PaymentService,
-    private generator: GeneratorPageComponent
+    private generator: CreateGridService
   ) {
   }
 
